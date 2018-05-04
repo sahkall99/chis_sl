@@ -1,0 +1,76 @@
+<title>Patients Detail</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+            <h4 class="text-info text-center display-6 font-weight-bold"> Details Page for the Patient known as
+                {{ patient_detail.first_name }} {{ patient_detail.middle_name }} {{ patient_detail.last_name }}
+            </h4><br/>
+            <p> Profile Image: <br/>
+                <img src="{{ patient_detail.photo.url }}" class="img-fluid d-block border border-success rounded"
+                     width="200" height="200" alt="Patient's Profile Image"></p>
+            <p> First Name: {{ patient_detail.first_name }}</p>
+            <p> Middle Name: {{ patient_detail.middle_name }}</p>
+            <p> Last Name: {{ patient_detail.last_name }}</p>
+            <p> Sex: {{ patient_detail.sex }}</p>
+            <p> Date of Birth: {{ patient_detail.date_of_birth }}</p>
+            <p> Patient's Age: {{ patient_detail.age }}</p>
+            <p> Patient's Blood Type: {{ patient_detail.blood_type }}</p>
+            <p> Category of Patient: {{ patient_detail.category }}</p>
+            <p> Admission Date: {{ patient_detail.admission_date }}</p>
+            <p> Discharge Date: {{ patient_detail.discharge_date }}</p>
+            <p> Patient's Address: {{ patient_detail.address }}</p>
+            <p> Residential City: {{ patient_detail.city }}</p>
+            <p> Patient's Region: {{ patient_detail.region }}</p>
+            <p> Phone Contact: {{ patient_detail.phone_number }}</p>
+            <p> Patient's Email: {{ patient_detail.email }}</p>
+            <hr/>
+            <p> Visiting Hospital: {{ patient_detail.hospital }}</p>
+            <p> Under the care of: {{ patient_detail.doctor }}</p>
+            <p> Admitted in: {{ patient_detail.ward }}</p><hr/>
+
+            <!-- Include the patient's illness(es) on the details page -->
+            <h5> Illnesses affecting {{ patient_detail.first_name }} {{ patient_detail.middle_name }}
+                {{ patient_detail.last_name }}:
+            </h5>
+
+            <!-- illness_patient is the related name of the relationship btw patient & illness -->
+            {% for illness in patient_detail.illness_patient.all %}
+                <p>{{ illness.name }} of type {{ illness.type }}</p>
+            {% endfor %}<hr/>
+
+            <h5> Drugs administered to {{ patient_detail.first_name }} {{ patient_detail.middle_name }}
+                {{ patient_detail.last_name }}:
+            </h5>
+
+            <!-- patient_drug is the related name of the relationship btw patient & drug -->
+            {% for drug in patient_detail.patient_drug.all %}
+                <p> {{ drug.name }} {{ drug.drug_type }}</p>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <!-- Link for updating the current patient's records. update_patient & delete_patient are names of url mappings -->
+    {% for group in user.groups.all %}
+        {% if group.name == 'Patients'  %}
+            {# Content for users within the 'Patients' group #}
+            <div class="container">
+                <p>
+                <!-- referencing the specific patient object based on the username -->
+                    <a class="btn btn-warning" href="{% url 'chis_sl:update_patient_profile' username=user.username %}">
+                        Update Records
+                    </a>
+                    {% if perms.patient.delete_patient %}
+                        {#  Content for users that can delete official records #}
+                        <a class="btn btn-danger" href="{% url 'chis_sl:delete_patient' username=user.username %}">
+                            Delete Records
+                        </a>
+                    {% endif %}
+                </p>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}

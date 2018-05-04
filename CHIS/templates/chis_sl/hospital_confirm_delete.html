@@ -1,0 +1,17 @@
+<title>Delete Hospital</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+        <h1> Delete {{ hospital_delete.name }} ? </h1>
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-danger" value="Delete">
+            <a href="{% url 'chis_sl:hospital_detail' pk=hospital_delete.pk %}">
+            <input type="button" class="btn btn-warning" value="Cancel">
+            </a>
+
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+<title>Hospital Detail</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+            <h4 class="text-info text-center display-6 font-weight-bold"> Details Page for {{ hospital_detail.name }}
+            </h4><br/>
+            <p> Hospital's Photo: <br/>
+                <img src="{{ hospital_detail.photo.url }}" class="img-fluid d-block border border-success rounded"
+                     width="400" height="400" alt="Hospital's Photo">
+            </p>
+            <p> Name of Hospital: {{ hospital_detail.name }}</p>
+            <p> Hospital's Address: {{ hospital_detail.address }}</p>
+            <p> Hospital's City: {{ hospital_detail.city }}</p>
+            <p> Hospital's Region: {{ hospital_detail.region }}</p>
+            <p> Hospital's Email: {{ hospital_detail.email }}</p>
+            <p> Hospital's Contact: {{ hospital_detail.phone_number }}</p>
+
+
+            <!-- ward is the related name of the relationship btw hospital & ward -->
+            {% for ward in hospital_detail.ward.all %}
+                <p> {{ ward.ward_number }}{{ ward.name }} </p>
+            {% endfor %}<br/>
+
+            <!-- to count the total number of wards in the hospital -->
+            <p> {{ hospital_detail.name }} constitutes <strong> {{ hospital_detail.ward.count }} wards </strong></p>
+
+            <p> The total number of patients presently at {{ hospital_detail.name }} are
+                <strong>{{ hospital_detail.patient_hospital.count }} </strong></p>
+
+            <p> There are <strong> {{ hospital_detail.doctor_hospital.count }} medical practitioners </strong> at the
+                {{ hospital_detail.name }} </p>
+
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+<title> List of Hospitals </title>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+    <div class="jumbotron">
+        <h4 class="text-info text-center display-6 font-weight-bold"> This page lists all registered hospitals </h4><br/>
+    <!-- hospitals is coming from the context_object_name in the HospitalListView -->
+        <ol>
+            {% for hospital in hospitals %}
+                <h5><li><a href="{{ hospital.id }}"> {{ hospital.name }} {{ hospital.address }} </a></li></h5>
+                {% empty %}
+                    <p class="emptyList" align="center">Sorry, no registered hospitals in this list.</p>
+            {% endfor %}
+        </ol>
+        {% if messages %}
+            {% for message in messages %}
+                <p class="alert alert-dismissable
+                {% if message.tags %}
+                alert-{{ message.tags }}">
+                {% endif %}
+                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ message }}
+                </p>
+
+            {% endfor %}
+        {% endif %}
+    </div>
+
+{% endblock %}

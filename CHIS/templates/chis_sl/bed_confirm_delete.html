@@ -1,0 +1,18 @@
+<title>Delete Bed</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+        <!-- bed_delete is the context_object_name from the BedDeleteView -->
+        <h1> Delete {{ bed_delete.name }} with status {{ bed_delete.status }} from {{ bed_delete.contained_ward.name }} ?</h1>
+        <form method="post">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-danger" value="Delete">
+            <a href="{% url 'chis_sl:bed_detail' pk=bed_delete.pk %}">
+            <input type="button" class="btn btn-warning" value="Cancel">
+            </a>
+
+        </form>
+    </div>
+
+{% endblock %}

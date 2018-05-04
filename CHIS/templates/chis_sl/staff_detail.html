@@ -1,0 +1,50 @@
+<title>Hospital Staff Detail</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+            <h4 class="text-info text-center display-6 font-weight-bold">
+                Details Page for the Hospital Staff known as {{ staff_detail.first_name }}
+                {{ staff_detail.middle_name }} {{ staff_detail.last_name }}
+            </h4><br/>
+            <p> Profile Image: <br/>
+                <img src="{{ staff_detail.photo.url }}" class="img-fluid d-block border border-success rounded"
+                     width="200" height="200" alt="Staff's Profile Image"></p>
+            <p> First Name: {{ staff_detail.first_name }}</p>
+            <p> Middle Name: {{ staff_detail.middle_name }}</p>
+            <p> Last Name: {{ staff_detail.last_name }}</p>
+            <p> Sex: {{ staff_detail.sex }}</p>
+            <p> Date of Birth: {{ staff_detail.date_of_birth }}</p>
+            <p> Staff's Address: {{ staff_detail.address }}</p>
+            <p> Residential City: {{ staff_detail.city }}</p>
+            <p> Staff's Region: {{ staff_detail.region }}</p>
+            <p> Phone Contact: {{ staff_detail.phone_number }}</p>
+            <p> Staff's Email: {{ staff_detail.email }}</p>
+            <p> Staff's Hospital: {{ staff_detail.hospital }}</p>
+
+        </div>
+    </div>
+
+    <!-- Link for updating the current staff's records. update_staff & delete_staff are names of url mappings -->
+    {% for group in user.groups.all %}
+        {% if group.name == 'Hospital_Staff'  %}
+            {# Content for users within the 'Hospital_Staff' group #}
+            <div class="container">
+                <p>
+                <!-- referencing the specific staff object based on the username -->
+                    <a class="btn btn-warning" href="{% url 'chis_sl:update_staff_profile' username=user.username %}">
+                        Update Records
+                    </a>
+                    {% if perms.patient.delete_patient %}
+                        {#  Content for users that can delete official records #}
+                        <a class="btn btn-danger" href="{% url 'chis_sl:delete_staff' username=user.username %}">
+                            Delete Records
+                        </a>
+                    {% endif %}
+                </p>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}

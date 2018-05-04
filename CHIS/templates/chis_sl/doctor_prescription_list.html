@@ -1,0 +1,38 @@
+<title>Doctors-Prescriptions</title>
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+    <div class="jumbotron">
+
+        <h5 class="text-info text-center display-6 font-weight-bold"> This page lists all medical prescriptions made by Dr.
+            {{ request.user.first_name }} {{ request.user.last_name }}
+        </h5>
+        <br/>
+
+        <ol>
+            {% for prescription in prescription_list %}
+                <h5><li><a href="{{ prescription.id }}"> Prescription made by: {{ prescription.doctor }}
+                    on behalf of {{ prescription.patient }} dated {{ prescription.date }} for the illness
+                {{ prescription.illness }} </a></li></h5>
+                {% empty %}
+                    <p class="emptyList" align="center">Sorry, no prescriptions for this doctor.</p>
+            {% endfor %}
+        </ol>
+
+    <!-- displaying success messages on addition and deletion of prescriptions -->
+        {% if messages %}
+            {% for message in messages %}
+                <p class="alert alert-dismissable
+                {% if message.tags %}
+                alert-{{ message.tags }}">
+                {% endif %}
+                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ message }}
+                </p>
+
+            {% endfor %}
+        {% endif %}
+    </div>
+
+{% endblock %}

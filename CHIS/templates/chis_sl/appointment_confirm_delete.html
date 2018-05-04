@@ -1,0 +1,20 @@
+<title>Delete Appointment</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+
+        <!-- appointment_delete is the context_object_name from the AppointmentDeleteView -->
+        <h1> Delete Appointment for patient {{ appointment_delete.designated_patient }} with
+            {{ appointment_delete.designated_doctor }} on {{ appointment_delete.appointment_date }} ? </h1>
+        <form method="post">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-danger" value="Delete">
+            <a href="{% url 'chis_sl:appointment_detail' pk=appointment_delete.pk %}">
+            <input type="button" class="btn btn-warning" value="Cancel">
+            </a>
+
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+<title>List of Doctors</title>
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+    <div class="jumbotron">
+
+        <h4 class="text-info text-center display-6 font-weight-bold"> This page lists all registered doctors </h4><br/>
+
+        <!-- doctors is coming from the context_object_name in the DoctorListView -->
+            <ol>
+                {% for doctor in doctors %}
+                    <h5><li><a href="{{ doctor.username }}"> Dr. {{ doctor.first_name }} {{ doctor.middle_name }}
+                        {{ doctor.last_name }}</a></li></h5>
+                    {% empty %}
+                        <p class="emptyList" align="center">Sorry, no medical doctors in this list.</p>
+                {% endfor %}
+            </ol>
+
+        <!-- displaying success messages on addition and deletion of doctors -->
+        {% if messages %}
+            {% for message in messages %}
+                <p class="alert alert-dismissable
+                {% if message.tags %}
+                alert-{{ message.tags }}">
+                {% endif %}
+                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ message }}
+                </p>
+
+            {% endfor %}
+        {% endif %}
+    </div>
+
+{% endblock %}

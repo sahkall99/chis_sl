@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load staticfiles %}  <!-- always place this line for loading static files here -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Russo+One" rel="stylesheet">
+
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+    <!-- Static css linking -->
+    <link rel="stylesheet" href="{% static 'css/master.css' %}">
+
+</head>
+<body class="bg-light">
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light mb-5 fontOnNav">
+  <a class="navbar-brand text-info font-weight-bold" href="{% url 'home' %}">CHIS</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link text-info" href="{% url 'about' %}"> About <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link text-info" href="{% url 'chis_sl:hospital_list' %}"> Hospitals
+            <span class="sr-only">(current)</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link text-info" href="{% url 'chis_sl:doctor_list' %}"> Doctors <span class="sr-only">(current)
+        </span></a>
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link text-info" href="{% url 'chis_sl:official_list' %}"> Officials
+            <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link text-info" href="{% url 'chis_sl:staff_list' %}"> Staff List <span class="sr-only">(current)
+        </span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link text-info" href="{% url 'chis_sl:pharmacy_list' %}"> Pharmacies
+            <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link text-info" href="{% url 'contact_us' %}"> Contact Us </a>
+      </li>
+
+    {% if user.is_authenticated %}
+         <li class="nav-link text-secondary">
+         Welcome: {{ request.user.username }}
+        </li>
+    {% endif %}
+    </ul>
+
+  <!-- Checking to see if the logged in user is part of the Doctors group -->
+    <ul class="nav navbar-nav navbar-right">
+        {% if user.is_authenticated %}
+            {% for group in user.groups.all %}
+                {% if group.name == 'Doctors' %}
+
+                    <div class="btn-group">
+                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> Patient
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item"
+                                   href="{% url 'chis_sl:patient_for_doctor' username=user.username %}">
+                                    My Patients
+                                </a>
+                                <div class="dropdown-divider"> </div>
+                                <a class="dropdown-item" href="{% url 'chis_sl:patient_list' %}"> View Patients </a>
+
+                            </div>
+                    </div>&nbsp;
+
+                    <div class="btn-group">
+                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> Illness
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'chis_sl:create_illness' %}"> Add Illness </a>
+                                <a class="dropdown-item" href="{% url 'chis_sl:illness_list' %}"> View Illnesses </a>
+                            </div>
+                    </div>&nbsp;
+
+                    <div class="btn-group">
+                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> Tests
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item"
+                                   href="{% url 'chis_sl:medical_test_for_doctor' username=user.username %}">
+                                    My Medical Tests
+                                </a>
+                                <a class="dropdown-item" href="{% url 'chis_sl:create_medical_test' %}">
+                                    Add Medical Test
+                                </a>
+
+                            </div>
+                    </div>&nbsp;
+
+                    <div class="btn-group">
+                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> Prescription
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item"
+                                   href="{% url 'chis_sl:prescription_for_doctor' username=user.username %}">
+                                    My Prescriptions
+                                </a>
+                                <a class="dropdown-item"
+                                   href="{% url 'chis_sl:create_prescription' %}"> Add Prescription</a>
+
+                            </div>
+                    </div>&nbsp;
+
+                    <div class="btn-group">
+                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> Recommendation
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item"
+                                   href="{% url 'chis_sl:recommendation_for_doctor' username=user.username %}">
+                                    My Recommendations </a>
+                                <a class="dropdown-item" href="{% url 'chis_sl:create_recommendation' %}">
+                                    Make Recommendation </a>
+
+                                <!-- appointments for a specific doctor -->
+                                <div class="dropdown-divider"> </div>
+                                <a class="dropdown-item" href="{% url 'chis_sl:for_doctor' username=user.username %}">
+                                    My Appointments </a>
+                            </div>
+                    </div>&nbsp;
+
+                    <div class="btn-group">
+                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> Profile
+                            </button>
+                            <div class="dropdown-menu">
+                                <!-- doctors is the related_name between the models Doctor and User -->
+                                <!-- url 'chis_sl:doctor_detail' pk=user.doctors.pk -->
+                                <a class="dropdown-item" href="{% url 'chis_sl:doctor_detail' username=user.username %}">
+                                    View Profile
+                                </a>
+                                <a class="dropdown-item" href="{% url 'chis_sl:change_password' %}">
+                                    Edit Password
+                                </a>
+                            </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <li class="nav-item active">
+                <a class="navbar nav-right" href="{% url 'chis_sl:logout' %}">
+                    <span class="far fa-user fa-2x" title="logout"></span> </a> </li>
+        {% else %}
+
+            <li class="nav-item dropdown">
+
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sign Up
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <!-- for relative url template, ALWAYS use app_name:url_mapping_name for the required link -->
+                <a class="dropdown-item" href="{% url 'chis_sl:create_doctor' %}">Doctor</a>
+                <a class="dropdown-item" href="{% url 'chis_sl:create_official' %}">Official</a>
+                </div>
+
+            </li>
+
+            <li>
+                <a class="navbar nav-right" href="{% url 'chis_sl:login' %}">
+                    <span class="fas fa-user fa-2x" title="login"></span>
+                </a>
+            </li>
+
+        {% endif %}
+    </ul>
+  </div>
+</nav>
+
+<!-- Checking to see if the logged in user is part of the Hospital_Staff group -->
+        {% if user.is_authenticated %}
+            {% for group in user.groups.all %}
+                {% if group.name == 'Hospital_Staff' %}
+                    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light mb-5 fontOnNav">
+                    <ul class="nav navbar-nav">
+
+                        <div class="btn-group">
+                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> Appointment
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'chis_sl:create_appointment' %}"> Add Appointment
+                                </a>
+                                <a class="dropdown-item" href="{% url 'chis_sl:appointment_list' %}"> View Appointments
+                                </a>
+                            </div>
+                        </div>&nbsp;
+
+                        <div class="btn-group">
+                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> Bed
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'chis_sl:create_bed' %}"> Add Bed</a>
+                                <a class="dropdown-item" href="{% url 'chis_sl:bed_list' %}"> View Beds</a>
+                            </div>
+                        </div>&nbsp;
+
+                        <div class="btn-group">
+                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> Doctors
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'chis_sl:create_doctor' %}"> Add Doctor</a>
+{#                                <a class="dropdown-item" href="{% url 'chis_sl:doctor_list' %}"> View Doctors</a>#}
+                            </div>
+                        </div>&nbsp;
+
+                        <div class="btn-group">
+                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> Drugs
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'chis_sl:create_drug' %}"> Add Drug</a>
+                                <a class="dropdown-item" href="{% url 'chis_sl:drug_list' %}"> View Drugs</a>
+                            </div>
+                        </div>&nbsp;
+
+                        <div class="btn-group">
+                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> History
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'chis_sl:create_history' %}"> Add History</a>
+                                <a class="dropdown-item" href="{% url 'chis_sl:history_list' %}"> View History</a>
+                            </div>
+                        </div>&nbsp;
+
+                        <div class="btn-group">
+                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> Officials
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'chis_sl:create_official' %}"> Add Official</a>
+                            </div>
+                        </div>&nbsp;
+
+                        <div class="btn-group">
+                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> Patients
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'chis_sl:create_patient' %}"> Add Patient</a>
+                                <a class="dropdown-item" href="{% url 'chis_sl:patient_list' %}"> View Patients</a>
+                            </div>
+                        </div>&nbsp;
+
+                        <div class="btn-group">
+                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> Pharmacy
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'chis_sl:create_pharmacy' %}"> Add Pharmacy</a>
+                            </div>
+                        </div>&nbsp;
+
+                        <div class="btn-group">
+                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> Report
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'chis_sl:create_report' %}"> Add Report</a>
+                                <a class="dropdown-item" href="{% url 'chis_sl:report_list' %}"> View Reports</a>
+                            </div>
+                        </div>&nbsp;
+
+                        <div class="btn-group">
+                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> Ward
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'chis_sl:create_ward' %}"> Add Ward</a>
+                                <a class="dropdown-item" href="{% url 'chis_sl:ward_list' %}"> View Wards</a>
+                            </div>
+                        </div>&nbsp;
+
+                        <div class="btn-group">
+                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> View Others
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'chis_sl:illness_list' %}"> Illnesses </a>
+                                <div class="dropdown-divider"> </div>
+                                <a class="dropdown-item" href="{% url 'chis_sl:medical_list' %}"> Medical Tests </a>
+                                <div class="dropdown-divider"> </div>
+                                <a class="dropdown-item" href="{% url 'chis_sl:prescription_list' %}"> Prescriptions
+                                </a>
+                                <div class="dropdown-divider"> </div>
+                                <a class="dropdown-item" href="{% url 'chis_sl:recommendation_list' %}">
+                                    Medical Recommendations </a>
+                            </div>
+                        </div>&nbsp;
+
+                        <div class="btn-group">
+                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> Profile
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'chis_sl:staff_detail' username=user.username %}">
+                                    My Profile
+                                </a>
+                                <a class="dropdown-item" href="{% url 'chis_sl:change_password' %}">
+                                    Edit Password
+                                </a>
+                            </div>
+                        </div>
+                            </ul>
+                        </div>
+                    </ul>
+                    </nav>
+                 {% endif %}
+            {% endfor %}
+{% endif %}
+
+
+<!-- Checking to see if the logged in user is part of the Officials group -->
+        {% if user.is_authenticated %}
+            {% for group in user.groups.all %}
+                {% if group.name == 'Officials' %}
+                    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light mb-5 fontOnNav">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'chis_sl:drug_list' %}"> View Drugs
+                                <span class="sr-only">(current)</span></a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'chis_sl:illness_list' %}"> View Illnesses
+                                <span class="sr-only">(current)</span></a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'chis_sl:patient_list' %}"> View Patients
+                                <span class="sr-only">(current)</span></a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'chis_sl:report_list' %}"> Madical Reports
+                                <span class="sr-only">(current)</span></a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'chis_sl:history_list' %}"> Medical History
+                                <span class="sr-only">(current)</span></a>
+                        </li>
+
+                        <div class="btn-group">
+                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> Profile
+                            </button>
+                            <div class="dropdown-menu">
+                                <!-- officials is the related_name between the models Official and User -->
+                                <a class="dropdown-item" href="{% url 'chis_sl:official_detail' username=user.username %}">
+                                    View Profile
+                                </a>
+                                <a class="dropdown-item" href="{% url 'chis_sl:change_password' %}">
+                                    Edit Password
+                                </a>
+                            </div>
+                        </div>
+                    </ul>
+{#                        </div>#}
+{#                        </ul>#}
+                    </nav>
+                 {% endif %}
+            {% endfor %}
+{% endif %}
+
+
+<!-- Checking to see if the logged in user is part of the Patients group -->
+        {% if user.is_authenticated %}
+            {% for group in user.groups.all %}
+                {% if group.name == 'Patients' %}
+                    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light mb-5 fontOnNav">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'chis_sl:appointment_for_patient' username=user.username %}">
+                                My Appointments
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'chis_sl:medical_history_for_patient' username=user.username %}">
+                                Medical History
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'chis_sl:prescription_for_patient' username=user.username %}">
+                                My Prescriptions
+                                <span class="sr-only">(current)</span></a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'chis_sl:recommendation_for_patient' username=user.username %}">
+                                View Medical Recommendations
+                                <span class="sr-only">(current)</span></a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'chis_sl:medical_report_for_patient' username=user.username %}">
+                                Medical Report
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'chis_sl:medical_test_for_patient' username=user.username %}">
+                                My Medical Tests
+                                <span class="sr-only">(current)</span></a>
+                        </li>
+
+                        <div class="btn-group">
+                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> Profile
+                            </button>
+                            <div class="dropdown-menu">
+                                <!-- patients is the related_name between the models Patient and User -->
+                                <a class="dropdown-item" href="{% url 'chis_sl:patient_detail' username=user.username %}">
+                                    My Profile
+                                </a>
+                                <a class="dropdown-item" href="{% url 'chis_sl:change_password' %}">
+                                    Edit Password
+                                </a>
+                            </div>
+                        </div>
+                    </ul>
+                        </div>
+                    </ul>
+                    </nav>
+                 {% endif %}
+            {% endfor %}
+{% endif %}
+    <div class="container fixed-bottom">
+        <p class="text-center text-secondary"> &copy; 2018 CHIS-SL. All rights reserved.  </p>
+    </div>
+
+    <!-- </ul>
+{#    <form class="form-inline my-2 my-lg-0">#}
+{#      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">#}
+{#      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>#}
+{#    </form>#}
+  </div>
+
+</nav>
+-->
+    {% block content %}
+    
+{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

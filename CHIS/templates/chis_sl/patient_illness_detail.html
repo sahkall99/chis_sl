@@ -1,0 +1,19 @@
+<title>Patient Illness Detail</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+
+            <h2 class="text-info text-center display-6 font-weight-bold"> Details Page for
+                {{ patient_illness_detail.illness.name }} </h2><br/>
+
+            <p> Affected Patient: {{ patient_illness_detail.patient.first_name }}
+                {{ patient_illness_detail.patient.last_name }}</p>
+            <p> Illnesses: {{ patient_illness_detail.illness.name }} </p>
+            <p> Date of Diagnosis: {{ patient_illness_detail.date_diagnosed }} </p>
+
+        </div>
+    </div>
+
+{% endblock %}

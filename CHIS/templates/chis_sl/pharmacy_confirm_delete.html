@@ -1,0 +1,18 @@
+<title>Delete Pharmacy</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+        <!-- pharmacy_delete is the context_object_name from the PharmacyDeleteView -->
+        <h1> Delete {{ pharmacy_delete.name }} ? </h1>
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-danger" value="Delete">
+            <a href="{% url 'chis_sl:pharmacy_detail' pk=pharmacy_delete.pk %}">
+            <input type="button" class="btn btn-warning" value="Cancel">
+            </a>
+
+        </form>
+    </div>
+
+{% endblock %}

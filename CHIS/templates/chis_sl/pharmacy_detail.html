@@ -1,0 +1,53 @@
+<title>Pharmacy Detail</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+            <h4 class="text-info text-center display-6 font-weight-bold"> Details Page for {{ pharmacy_detail.name }}
+            </h4><br/>
+            <p> Pharmacy's Photo: <br/>
+                <img src="{{ pharmacy_detail.photo.url }}" class="img-fluid d-block border border-success rounded"
+                     width="400" height="400" alt="Pharmacy's Photo">
+            </p>
+            <p> Name of Pharmacy: {{ pharmacy_detail.name }}</p>
+            <p> Pharmacy's Address: {{ pharmacy_detail.address }}</p>
+            <p> Pharmacy's City: {{ pharmacy_detail.city }}</p>
+            <p> Pharmacy's Region: {{ pharmacy_detail.region }}</p>
+            <p> Pharmacy's Email: {{ pharmacy_detail.email }}</p>
+            <p> Pharmacy's Contact: {{ pharmacy_detail.phone_number }}</p>
+            <p> Pharmacist in Charge: {{ pharmacy_detail.pharmacist }}</p>
+            <hr/>
+            <p> Related Hospital: {{ pharmacy_detail.hospital }}</p><hr/>
+
+            <h3> The stock of drugs in {{ pharmacy_detail.name }}: </h3>
+
+    <!-- pharmacy_drug is the related name of the relationship btw Pharmacy & Drug -->
+            {% for drug in pharmacy_detail.pharmacy_drug.all %}
+                <p> Name: {{ drug.name }} | Type: {{ drug.drug_type }} | Quantity: {{ drug.quantity }}</p>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <!-- Link for updating the current pharmacy's records. update_pharmacy & delete_pharmacy are names of url mappings -->
+    {% for group in user.groups.all %}
+        {% if group.name == 'Hospital_Staff'  %}
+            {# Content for users with 'Hospital_Staff' group #}
+            <div class="container">
+                <p>
+                    <a class="btn btn-warning" href="{% url 'chis_sl:update_pharmacy' pk=pharmacy_detail.pk %}">
+                        Update Records
+                    </a>
+                    {% if perms.pharmacy.delete_pharmacy %}
+                        {#  Content for users that can delete pharmacy records #}
+                        <a class="btn btn-danger" href="{% url 'chis_sl:delete_pharmacy' pk=pharmacy_detail.pk %}">
+                            Delete Records
+                        </a>
+                    {% endif %}
+                </p>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,35 @@
+<title>Users Detail</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+
+            <h2> Welcome to the Details Page for the User known as {{ user.first_name }}
+                {{ user.last_name }} </h2><br/>
+            <p> First Name: {{ user.first_name }}</p>
+            <p> Last Name: {{ user.last_name }}</p>
+            <p> Username: {{ user.username }}</p>
+            <p> Email: {{ user.email }}</p>
+
+        </div>
+    </div>
+
+    <!-- Link for updating the current official's records. update_official & delete_official are names of url mappings -->
+        {% if user.is_authenticated  %}
+            <div class="container">
+                <p>
+                    <a class="btn btn-warning" href="{% url 'chis_sl:update_user' pk=user_detail.pk %}">
+                        Update Records
+                    </a>
+                    {% if perms.user.delete_user %}
+                        {#  Content for users that can delete official records #}
+                        <a class="btn btn-danger" href="{% url 'chis_sl:delete_user' pk=user_detail.pk %}">
+                            Delete Records
+                        </a>
+                    {% endif %}
+                </p>
+            </div>
+        {% endif %}
+
+{% endblock %}

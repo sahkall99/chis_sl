@@ -1,0 +1,37 @@
+<title>Doctors-Patients</title>
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+    <div class="jumbotron">
+
+        <h5 class="text-info text-center display-6 font-weight-bold"> This page lists all medical patients under
+            the care of Dr. {{ request.user.first_name }} {{ request.user.last_name }}
+        </h5>
+        <br/>
+
+        <ol>
+            {% for patient in patient_list %}
+                <h5><li><a href="{{ patient.id }}"> {{ patient.first_name }} {{ patient.middle_name }}
+                    {{ patient.last_name }} </a></li></h5>
+                {% empty %}
+                    <p class="emptyList" align="center">Sorry, no patients for this doctor.</p>
+            {% endfor %}
+        </ol>
+
+    <!-- displaying success messages on addition and deletion of prescriptions -->
+        {% if messages %}
+            {% for message in messages %}
+                <p class="alert alert-dismissable
+                {% if message.tags %}
+                alert-{{ message.tags }}">
+                {% endif %}
+                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ message }}
+                </p>
+
+            {% endfor %}
+        {% endif %}
+    </div>
+
+{% endblock %}

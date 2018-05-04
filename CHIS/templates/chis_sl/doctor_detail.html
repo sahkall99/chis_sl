@@ -1,0 +1,62 @@
+<title>Doctors Detail</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+            <h4 class="text-info text-center display-6 font-weight-bold"> Details Page for Dr.
+                {{ doctor_detail.first_name }} {{ doctor_detail.middle_name }} {{ doctor_detail.last_name }}</h4>
+            <p> Profile Image: <br/>
+                <img src="{{ doctor_detail.photo.url }}" class="img-fluid d-block border border-success rounded"
+                     width="200" height="200" alt="Doctor's Profile Photo"></p>
+            <p> First Name: {{ doctor_detail.first_name }}
+            <p> Middle Name: {{ doctor_detail.middle_name }}</p>
+            <p> Last Name: {{ doctor_detail.last_name }}</p>
+            <p> Date of Birth: {{ doctor_detail.date_of_birth }}</p>
+            <p> Sex: {{ doctor_detail.sex }}</p>
+            <p> Qualification: {{ doctor_detail.qualification }}</p>
+            <p> Speciality: {{ doctor_detail.speciality }}</p>
+            <p> Work Experience (in years): {{ doctor_detail.work_experience }}</p>
+            <p> Category: {{ doctor_detail.category }}</p>
+            <p> Email: {{ doctor_detail.email }}</p>
+            <p> Username: {{ doctor_detail.username }}</p>
+            <p> Residential Address: {{ doctor_detail.address }}</p>
+            <p> Contact: {{ doctor_detail.phone_number }}</p>
+            <p> Attached Hospital: {{ doctor_detail.hospital }}</p><hr/>
+
+            <h3> Patients seen by Dr. {{ doctor_detail.first_name }} {{ doctor_detail.middle_name }}
+                {{ doctor_detail.last_name }}: </h3>
+        <!-- patient_doctor is the related name of the relationship btw doctor & patient -->
+            {% for patient in doctor_detail.patient_doctor.all %}
+                <ol>
+                    <li>
+                        <p>{{ patient.first_name }} {{ patient.middle_name }} {{ patient.last_name }}</p>
+                    </li>
+                </ol>
+            {% endfor %}
+            <br/>
+        </div>
+    </div>
+
+    <!-- Link for updating the current doctor's records. update_doctor & delete_doctor are names of url mappings -->
+    {% if user.is_authenticated %}
+    {% for group in user.groups.all %}
+        {% if group.name == 'Doctors' %}
+            {# Content for users within the 'Doctors' group #}
+            <div class="container">
+                <p>
+                <!-- referencing the specific doctor object based on the username -->
+                    <a class="btn btn-warning" href="{% url 'chis_sl:update_doctor' username=user.username %}">
+                        Update Records
+                    </a>
+                    {% if perms.doctor.delete_doctor %}
+                        <a class="btn btn-danger" href="{% url 'chis_sl:delete_doctor' username=user.username %}">
+                            Delete Records
+                        </a>
+                    {% endif %}
+                </p>
+            </div>
+        {% endif %}
+    {% endfor %}
+    {% endif %}
+{% endblock %}

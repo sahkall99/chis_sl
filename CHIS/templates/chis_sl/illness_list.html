@@ -1,0 +1,34 @@
+<title> List of Illnesses </title>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+    <div class="jumbotron">
+
+        <h4 class="text-info text-center display-6 font-weight-bold"> This page lists all recorded illnesses </h4><br/>
+
+    <!-- illnesses is coming from the context_object_name in the IllnessListView -->
+        <ol>
+            {% for illness in illnesses %}
+                <h5><li><a href="{{ illness.id }}"> {{ illness.name }} </a></li></h5>
+                {% empty %}
+                    <p class="emptyList" align="center">Sorry, no registered illnesses in this list.</p>
+            {% endfor %}
+        </ol>
+
+    <!-- displaying success messages on addition and deletion of illnesses -->
+        {% if messages %}
+            {% for message in messages %}
+                <p class="alert alert-dismissable
+                {% if message.tags %}
+                alert-{{ message.tags }}">
+                {% endif %}
+                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ message }}
+                </p>
+
+            {% endfor %}
+        {% endif %}
+    </div>
+
+{% endblock %}

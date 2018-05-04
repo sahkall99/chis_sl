@@ -1,0 +1,45 @@
+<title>Prescription Detail</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+
+            <h3 class="text-info text-center display-6 font-weight-bold"> Details Page: {{ prescription_detail.name }}
+            </h3><br/>
+            <p> Name of Prescription: {{ prescription_detail.name }} </p>
+            <p> Date of Prescription: {{ prescription_detail.date }} </p>
+            <p> Drug Dosage on Prescription: {{ prescription_detail.drug_dosage }} </p>
+            <p> Prescription prepared by: Dr. {{ prescription_detail.doctor.first_name }}
+                {{ prescription_detail.doctor.middle_name }}
+                {{ prescription_detail.doctor.last_name }}</p>
+            <p> Prescription on behalf of: {{ prescription_detail.patient.first_name }}
+                {{ prescription_detail.patient.middle_name }}
+                {{ prescription_detail.patient.last_name }}</p>
+            <p> Prescription for the Illness: {{ prescription_detail.illness.name }} </p><hr/>
+
+        </div>
+    </div>
+
+    <!-- Link for updating the current prescription's records. update_prescription & delete_prescription are names of
+    url mappings -->
+    {% for group in user.groups.all %}
+        {% if group.name == 'Hospital_Staff'  %}
+            {# Content for users within the 'Doctors' group #}
+            <div class="container">
+                <p>
+                    <a class="btn btn-warning" href="{% url 'chis_sl:update_prescription' pk=prescription_detail.pk %}">
+                        Update Records
+                    </a>
+                    {% if perms.prescription.delete_prescription %}
+                        {#  Content for users that can delete prescription records #}
+                        <a class="btn btn-danger" href="{% url 'chis_sl:delete_prescription' pk=prescription_detail.pk %}">
+                            Delete Records
+                        </a>
+                    {% endif %}
+                </p>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}

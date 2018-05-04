@@ -1,0 +1,39 @@
+<title>Appointment Detail</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+
+            <h4 class="text-info text-center display-6 font-weight-bold"> Appointment Details Page </h4><br/>
+            <h4> Appointment between {{ appointment_detail.doctor }} and
+            {{ appointment_detail.patient }}</h4><br/>
+            <p> Date of Appointment: {{ appointment_detail.date }}</p>
+            <p> Doctor in charge: {{ appointment_detail.doctor }}</p>
+            <p> Patient: {{ appointment_detail.patient }}</p>
+
+        </div>
+    </div>
+
+    <!-- Link for updating the current appointment's records. update_appointment & delete_appointment
+        are names of url mappings -->
+            {% for group in user.groups.all %}
+                {% if group.name == 'Hospital_Staff'  %}
+                    {# Content for users with 'Hospital_Staff' group #}
+                    <div class="container">
+                        <p>
+                            <a class="btn btn-warning" href="{% url 'chis_sl:update_appointment' pk=appointment_detail.pk %}">
+                            Update Records
+                            </a>
+                            {% if perms.appointment.delete_appointment %}
+                                {#  Content for users that can delete appointment records #}
+                           <a class="btn btn-danger" href="{% url 'chis_sl:delete_appointment' pk=appointment_detail.pk %}">
+                                Delete Records
+                           </a>
+                            {% endif %}
+                        </p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,40 @@
+<title>History Detail</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+
+            <h4 class="text-info text-center display-6 font-weight-bold"> Medical History </h4><br/>
+            <h2> Details Page of the {{ history_detail.number}} </h2><br/>
+            <p> Brief Description: {{ history_detail.description }}</p>
+            <p> Appointment: {{ history_detail.appointment }}</p>
+            <p> Doctor: {{ history_detail.doctor }}</p>
+            <p> Illness: {{ history_detail.illness }}</p>
+            <p> Patient: {{ history_detail.patient }}</p>
+            <p> Prescription: {{ history_detail.prescription }}</p>
+
+        </div>
+    </div>
+
+    <!-- Link for updating the current history's records. update_history & delete_history are names of url mappings -->
+    {% for group in user.groups.all %}
+        {% if group.name == 'Hospital_Staff'  %}
+            {# Content for users with 'Hospital_Staff' group #}
+            <div class="container">
+                <p>
+                    <a class="btn btn-warning" href="{% url 'chis_sl:update_history' pk=history_detail.pk %}">
+                        Update Records
+                    </a>
+                    {% if perms.history.delete_history %}
+                    {#  Content for users that can delete history records #}
+                        <a class="btn btn-danger" href="{% url 'chis_sl:delete_history' pk=history_detail.pk %}">
+                            Delete Records
+                        </a>
+                    {% endif %}
+                </p>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}

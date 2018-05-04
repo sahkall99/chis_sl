@@ -1,0 +1,38 @@
+<title>Bed Detail</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+
+            <h4 class="text-info text-center display-6 font-weight-bold"> Details Page for Bed {{ bed_detail.name }}
+            </h4><br/>
+            <p> Name of Bed: {{ bed_detail.name }}</p>
+            <p> Status of Bed: {{ bed_detail.status }}</p>
+            <p> Current Occupant (if any): {{ bed_detail.assigned_patient }}</p>
+            <p> Location of Bed: {{ bed_detail.contained_ward }}</p>
+
+        </div>
+    </div>
+
+    <!-- Link for updating the current bed's records. update_bed & delete_bed are names of url mappings -->
+            {% for group in user.groups.all %}
+                {% if group.name == 'Hospital_Staff'  %}
+                    {# Content for users with 'Hospital_Staff' group #}
+                    <div class="container">
+                        <p>
+                            <a class="btn btn-warning" href="{% url 'chis_sl:update_bed' pk=bed_detail.pk %}">
+                                Update Records
+                            </a>
+                            {% if perms.bed.delete_bed %}
+                                {#  Content for users that can delete bed records #}
+                                <a class="btn btn-danger" href="{% url 'chis_sl:delete_bed' pk=bed_detail.pk %}">
+                                    Delete Records
+                                </a>
+                            {% endif %}
+                        </p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,18 @@
+<title>Delete Medical History</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+        <!-- history_delete is the context_object_name from the HistoryDeleteView -->
+        <h1> Delete Medical History titled {{ history_delete.history_number }} ?</h1>
+        <form method="post">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-danger" value="Delete">
+            <a href="{% url 'chis_sl:history_detail' pk=history_delete.pk %}">
+            <input type="button" class="btn btn-warning" value="Cancel">
+            </a>
+
+        </form>
+    </div>
+
+{% endblock %}

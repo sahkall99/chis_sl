@@ -1,0 +1,30 @@
+<title>Add New Bed</title>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap4 %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+            <h1>
+                {% if not form.instance.pk %}  <!-- checks whether the primary key of the bed exists or not -->
+                    <p align="center"> Bed Addition Form </p>
+                    {% else %}
+                    <p align="center"> Update Bed </p>
+                {% endif %}
+             <div class="container" align="center">
+            <img src="{% static "images/Coat_of_arms_SL.svg.png" %}" class="img-fluid img-thumbnail border border-success rounded"
+                 alt="Coat of Arms" align="center">
+            </div>
+            </h1>
+
+            <form method="post">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <input type="submit" class="btn btn-primary" value="Create Bed">
+            </form>
+
+        </div>
+    </div>
+
+{% endblock %}

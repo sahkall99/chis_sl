@@ -1,0 +1,21 @@
+<title>Delete Medical Doctor</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+    <!-- doctor_delete is the context_object_name from the DoctorDeleteView -->
+        <h1> Are you sure you want to delete the records of Dr. {{ doctor_delete.first_name }}
+            {{ doctor_delete.middle_name }} {{ doctor_delete.last_name }} from {{ doctor_delete.hospital }}?
+        </h1>
+        <form method="post">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger" value="Delete">
+                <!-- referencing the specific doctor object based on the username -->
+                <a href="{% url 'chis_sl:doctor_detail' username=user.username %}">
+                <input type="button" class="btn btn-warning" value="Cancel">
+                </a>
+
+        </form>
+    </div>
+
+{% endblock %}

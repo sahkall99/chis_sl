@@ -1,0 +1,42 @@
+<title>Medical Recommendation Detail</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+
+            <h4 class="text-info text-center display-6 font-weight-bold"> Details Page for the medical recommendation:
+                {{ recommendation_detail.number }}
+            </h4><br/>
+            <p> Medical Recommendation Number: {{ recommendation_detail.number }}</p>
+            <p> Medical Recommendation by: {{ recommendation_detail.doctor }}</p>
+            <p> Medical Recommendation for: {{ recommendation_detail.patient }}</p>
+            <p> Content of Medical Recommendation: {{ recommendation_detail.medical_rec }}</p>
+            <p> Date of Medical Recommendation: {{ recommendation_detail.date }}</p>
+            <p> Medical Recommendation Status: {{ recommendation_detail.status }}</p>
+
+        </div>
+    </div>
+
+    <!-- Link for updating the current medical recommendation's records. update_recommendation & delete_recommendation
+        are names of url mappings -->
+    {% for group in user.groups.all %}
+        {% if group.name == 'Hospital_Staff'  %}
+            {# Content for users within the 'Hospital_Staff' group #}
+            <div class="container">
+                <p>
+                    <a class="btn btn-warning" href="{% url 'chis_sl:update_recommendation' pk=recommendation_detail.pk%}">
+                        Update Records
+                    </a>
+                    {% if perms.recommendation.delete_recommendation %}
+                        {#  Content for users that can delete recommendation records #}
+                        <a class="btn btn-danger" href="{% url 'chis_sl:delete_recommendation' pk=recommendation_detail.pk %}">
+                            Delete Records
+                        </a>
+                    {% endif %}
+                </p>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}

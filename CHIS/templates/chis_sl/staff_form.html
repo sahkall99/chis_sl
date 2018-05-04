@@ -1,0 +1,31 @@
+<title>Add New Hospital Staff</title>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap4 %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+            <h1>
+                {% if not form.instance.pk %}  <!-- checks whether the primary key of the staff exists or not -->
+                    <p class="text-center"> Hospital Staff Registration Form </p>
+                    {% else %}
+                    <p class="text-center"> Update Hospital Staff </p>
+                {% endif %}
+             <div class="container" align="center">
+            <img src="{% static "images/Coat_of_arms_SL.svg.png" %}"
+                 class="img-fluid img-thumbnail border border-success rounded"
+                 alt="Coat of Arms" align="center">
+            </div>
+            </h1>
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <input type="submit" class="btn btn-primary" value="Create Hospital Staff">
+            </form>
+
+        </div>
+    </div>
+
+{% endblock %}

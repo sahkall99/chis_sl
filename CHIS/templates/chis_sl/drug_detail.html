@@ -1,0 +1,48 @@
+<title>Drugs Detail</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+            <h4 class="text-info text-center display-6 font-weight-bold"> Details Page for the Drug
+                {{ drug_detail.name }} </h4><br/>
+            <p> Name of Drug: {{ drug_detail.name }}</p>
+            <p> Type of Drug: {{ drug_detail.drug_type }}</p>
+            <p> Description: {{ drug_detail.description }}</p>
+            <p> Quantity in Stock: {{ drug_detail.quantity }}</p>
+            <p> Manufacture Date: {{ drug_detail.manufacture_date }}</p>
+            <p> Expiry Date: {{ drug_detail.expiry_date }}</p>
+            <p> Pharmacy: {{ drug_detail.drug_pharmacy }}</p>
+
+            <!-- list all patients that have received this drug -->
+            <!-- <p> Receiving Patients: {{ drug_detail.drug_patient.patient_drug.all }} </p> -->
+
+            <!-- list all pharmacies stocking this drug || pharmacy_drug is the related name btw Pharmacy & Drug-->
+            <!-- <p> List of Pharmacies having this drug: {{ drug_detail.drug_pharmacy.pharmacy_drug.distinct.count }} </p> -->
+
+            <!-- list all prescriptions containing this drug || prescription_drug is the related name btw Prescription & Drug-->
+            <p> Prescriptions containing this drug: {{ drug_detail.drug_prescription.prescription_drug.count }} </p>
+
+        </div>
+    </div>
+
+    <!-- Link for updating the current drug's records. update_drug & delete_drug are names of url mappings -->
+    {% for group in user.groups.all %}
+        {% if group.name == 'Hospital_Staff'  %}
+            {# Content for users with 'Hospital_Staff' group #}
+            <div class="container">
+                <p>
+                    <a class="btn btn-warning" href="{% url 'chis_sl:update_drug' pk=drug_detail.pk %}"> Update Records
+                    </a>
+                    {% if perms.drug.delete_drug %}
+                        {#  Content for users that can delete drug records #}
+                        <a class="btn btn-danger" href="{% url 'chis_sl:delete_drug' pk=drug_detail.pk %}">
+                            Delete Records
+                        </a>
+                    {% endif %}
+                </p>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,31 @@
+<title>Add New Medical Test</title>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap4 %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+            <h1>
+                {% if not form.instance.pk %} <!-- checks whether the primary key of the medical test exists or not -->
+                    <p class="text-center"> New Medical Test Form </p>
+                    {% else %}
+                    <p class="text-center"> Update Medical Test </p>
+                {% endif %}
+                 <div class="container" align="center">
+                <img src="{% static "images/Coat_of_arms_SL.svg.png" %}"
+                     class="img-fluid img-thumbnail border border-success rounded"
+                     alt="Coat of Arms" align="center">
+                </div>
+            </h1>
+
+            <form method="post">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <input type="submit" class="btn btn-primary" value="Create Medical Test">
+            </form>
+
+        </div>
+    </div>
+
+{% endblock %}

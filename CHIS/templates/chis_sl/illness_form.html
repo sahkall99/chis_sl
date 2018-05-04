@@ -1,0 +1,33 @@
+<title>Add New Illness</title>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap4 %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+            <h1>
+                {% if not form.instance.pk %}  <!-- checks whether the primary key of the illness exists or not -->
+                    <p align="center"> Illness Addition Form </p>
+                    {% else %}
+                    <p align="center"> Update Illness </p>
+                {% endif %}
+                 <div class="container" align="center">
+                <img src="{% static "images/Coat_of_arms_SL.svg.png" %}"
+                     class="img-fluid img-thumbnail border border-success rounded"
+                     alt="Coat of Arms" align="center">
+                </div>
+            </h1>
+
+            <form method="post">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <div class="text-center">
+                    <input type="submit" class="btn btn-primary btn-lg" value="Add Illness">
+                    <input type="reset" class="btn btn-danger btn-lg" value="Reset Form">
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

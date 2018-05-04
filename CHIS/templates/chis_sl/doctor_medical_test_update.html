@@ -1,0 +1,18 @@
+<title>Doctor Medical-Test Update</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+
+            <h2 class="text-center display-6 font-weight-bold"> Medical Test Records </h2><br/>
+                    <h3> Welcome to the Details Page for the medical test: {{ medical_detail.name }} </h3><br/>
+                    <p> Name of Medical Test: {{ medical_detail.name }}</p>
+                    <p> Date of Medical Test: {{ medical_detail.date }}</p>
+                    <p> Medical Lab Unit: {{ medical_detail.unit }}</p>
+                    <p> Medical Test Recipient: {{ medical_detail.patient }}</p>
+
+        </div>
+    </div>
+
+{% endblock %}

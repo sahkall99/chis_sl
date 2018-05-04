@@ -1,0 +1,18 @@
+<title>Doctor Appointment Update</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+
+            <h3 align="center"> Doctor Appointment Details Page </h3><br/>
+            <h4> Appointment between {{ doctor_appointment_update.doctor }} and
+            {{ doctor_appointment_update.patient }}</h4><br/>
+            <p> Date of Appointment: {{ doctor_appointment_update.date }}</p>
+            <p> Doctor in charge: {{ doctor_appointment_update.doctor }}</p>
+            <p> Patient: {{ doctor_appointment_update.patient }}</p>
+
+        </div>
+    </div>
+
+{% endblock %}

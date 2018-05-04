@@ -1,0 +1,50 @@
+<title>Officials Detail</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+
+            <h4 class="text-info text-center display-6 font-weight-bold"> Details Page for the Official known as
+                {{ official_detail.first_name }} {{ official_detail.last_name }} </h4><br/>
+            <p> Profile Image: <br/>
+                <img src="{{ official_detail.photo.url }}" class="img-fluid d-block border border-success rounded"
+                     width="200" height="200" alt="Official's Profile Image"></p>
+            <p> First Name: {{ official_detail.first_name }}</p>
+            <p> Middle Name: {{ official_detail.middle_name }}</p>
+            <p> Last Name: {{ official_detail.last_name }}</p>
+            <p> Sex: {{ official_detail.sex }}</p>
+            <p> Date of Birth: {{ official_detail.date_of_birth }}</p>
+            <p> Official's Address: {{ official_detail.address }}</p>
+            <p> Select City: {{ official_detail.city }}</p>
+            <p> Select Region: {{ official_detail.region }}</p>
+            <p> Email: {{ official_detail.email }}</p>
+            <p> Official's Username: {{ official_detail.username }}</p>
+            <p> Phone Contact: {{ official_detail.phone_number }}</p>
+            <p> Assigned Unit: {{ official_detail.unit }}</p>
+
+        </div>
+    </div>
+
+    <!-- Link for updating the current official's records. update_official & delete_official are names of url mappings -->
+    {% for group in user.groups.all %}
+        {% if group.name == 'Officials'  %}
+            {# Content for users within the 'Officials' group #}
+            <div class="container">
+                <p>
+                <!-- referencing the specific official object based on the username -->
+                    <a class="btn btn-warning" href="{% url 'chis_sl:update_official' username=user.username %}">
+                        Update Records
+                    </a>
+                    {% if perms.official.delete_official %}
+                        {#  Content for users that can delete official records #}
+                        <a class="btn btn-danger" href="{% url 'chis_sl:delete_official' username=user.username %}">
+                            Delete Records
+                        </a>
+                    {% endif %}
+                </p>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}

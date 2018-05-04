@@ -1,0 +1,160 @@
+<title>chis-sl</title>
+{% extends "base.html" %}
+{% load staticfiles %}  <!-- always place this line for loading static files here -->
+{% block content %}
+
+    <h2 class="text-center display-6 font-weight-bold text-info"> Cloud Based Health Information Systems for
+        Sierra Leone <br/><small class="text muted">(CHIS-SL)</small>
+    </h2><br/>
+
+    <div class="d-flex flex-row justify-content-between">
+    <div class="card bg-info border-danger float-left w-30 d-inline-block text-white ml-5 mb-1">
+    <div class="card-header text-center"> Health care Statistics in Sierra Leone </div>
+    <div class="card-body">
+        <h4 class="card-title text-center"> Health care in Sierra Leone </h4>
+    <p class="text-sm-left m-3 card-text"> Health care is one of the fundamental building blocks in every country, and
+        Sierra Leone is no exception. The current health policy of Sierra Leone seeks to maintain  and  improve  the
+        health  of  all Sierra  Leoneans,  and  addresses  the  following  challenges:  <br/>
+        Malaria <br/> Sexually transmitted infections (STIs) including HIV/AIDS, Tuberculosis (TB) <br/>
+        Reproductive health including maternal and neonatal  mortality <br/> Childhood  diseases, nutrition-related
+        diseases,  water-food and sanitation-borne  diseases <br/> Disability and mental illness.
+    </p>
+        <button class="btn btn-secondary d-block mb-4" data-toggle="collapse" data-target="#collapse-btn-1">
+            Read More...
+        </button>
+        <div class="collapse"  id="collapse-btn-1">
+        <h5 class="card-subtitle text-center"> Current Medical Statistics </h5>
+    <p class="text-sm-left m-3 card-text"> At present, the total fertility rate (TFR) is estimated at 4.9 children per
+        woman and the birth registration rate is at 65.1%. Out of 1,180,795 children aged 0-5 years, 54.0 percent are
+        fully immunised, 38.6 percent partially immunised and 1.4 percent were never immunised. <br/>
+        In Sierra Leone, the infant mortality rate is 92 deaths per 1,000 live births. The estimate of child mortality
+        (age 12 months to 4 years) is 70 deaths per 1,000 live births, while the overall under-five mortality rate for
+        the same period is 156  deaths per  1,000  live  births.  The  neonatal  mortality  rate  is  39  deaths  per
+        1,000  live  births. The post neonatal mortality rate is 54 deaths per 1,000 live births. </p>
+            <div class="card-footer text-center text-light"> Source: Statistics Sierra Leone </div>
+    </div>
+
+    </div>
+    </div>
+
+    <div class="container d-inline">
+        <!-- this section handles the sliding of images on the home page -->
+        <div id="slider1" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li class="active" data-target="#slider1" data-slide-to="0"></li>
+                <li class="active" data-target="#slider1" data-slide-to="1"></li>
+                <li class="active" data-target="#slider1" data-slide-to="2"></li>
+                <li class="active" data-target="#slider1" data-slide-to="3"></li>
+                <li class="active" data-target="#slider1" data-slide-to="4"></li>
+            </ol>
+            <!-- displays the images with controls -->
+            <div class="carousel-inner" role="listbox">
+                <div class="carousel-item active">
+                    <img src="{% static "images/sl_map.jpg" %}" class="img-fluid d-block border border-success rounded"
+                         alt="Map of Sierra Leone">
+                    <!-- displays the caption only on medium & large screens -->
+                    <div class="carousel-caption d-none d-md-block">
+                    <h6>Slide One</h6>
+                    <p> The Map of Sierra Leone</p>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <img src="{% static "images/connaught_hospital.jpg" %}"
+                         class="img-fluid d-block border border-success rounded"
+                         alt="Connaught Hospital - Sierra Leone">
+                    <div class="carousel-caption d-none d-md-block">
+                    <h6>Slide Two</h6>
+                    <p> Connaught Government Hospital</p>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <img src="{% static "images/emergency_hospital.jpg" %}"
+                         class="img-fluid d-block border border-success rounded"
+                         alt="Emergency Hospital - Sierra Leone">
+                    <div class="carousel-caption d-none d-md-block">
+                    <h6>Slide Three</h6>
+                    <p> Freetown Emergency Hospital</p>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <img src="{% static "images/pcmh.jpg" %}" class="img-fluid d-block border border-success rounded"
+                         alt="Princess Christian Maternity Hospital - Sierra Leone">
+                    <div class="carousel-caption d-none d-md-block">
+                    <h6>Slide Four</h6>
+                    <p> PCMH - The Cottage Hospital</p>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <img src="{% static "images/chinese_friendship_hospital.jpg" %}"
+                         class="img-fluid d-block border border-success rounded"
+                         alt="Chinese Friendship Hospital - Sierra Leone">
+                    <div class="carousel-caption d-none d-md-block">
+                    <h6>Slide Five</h6>
+                    <p> Chinese Friendship Hospital</p>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#slider1" class="carousel-control-prev" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+
+            <a href="#slider1" class="carousel-control-next" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+
+        </div>
+
+        <!-- displays the card and its content underneath the images -->
+    <div class="card bg-light border-success float-center w-30 text-center text-dark mt-2 ml-1 mb-1">
+        <div class="card-header text-center"> Cloud Based Health Information System </div>
+        <div class="card-body">
+            <h4 class="card-title text-center"> CHIS in Sierra Leone </h4>
+    <p class="text-sm-left m-3 card-text"> Healthcare is one of the fundamental building blocks in every country,
+        and Sierra Leone is no exception. The current health policy of Sierra Leone seeks to maintain  and  improve
+        the  health  of  all Sierra  Leoneans,  and  addresses  the  following  challenges:  At present, the total
+        fertility rate (TFR) is estimated at 4.9 children per woman
+        and the birth registration rate is at 65.1%. Out of 1,180,795 children aged 0-5 years, 54.0 percent are fully
+        immunised, 38.6 percent partially immunised and 1.4 percent were never immunised<br/>
+    </p>
+        </div>
+        </div>
+    </div>
+
+        <!-- displays the card and its content on the right of the sliding images -->
+    <div class="card bg-info border-danger float-right w-30 d-inline text-right text-white mr-5 mb-1">
+    <div class="card-header text-center"> Cloud Based Health Information System </div>
+    <div class="card-body">
+        <h4 class="card-title text-center"> CHIS in Sierra Leone </h4>
+    <p class="text-sm-left m-3 card-text"> Healthcare is one of the fundamental building blocks in every country, and
+        Sierra Leone is no exception. The current health policy of Sierra Leone seeks to maintain  and  improve  the
+        health  of  all Sierra  Leoneans,  and  addresses  the  following  challenges:  <br/>
+        Malaria <br/> Sexually transmitted infections (STIs) including HIV/AIDS, Tuberculosis (TB) <br/>
+        Reproductive health including maternal and neonatal  mortality <br/> Childhood  diseases, nutrition-related
+        diseases,  water-food and sanitation-borne  diseases <br/> Disability and mental illness.
+{#        <a href="#" class="btn btn-success btn-block"> Read More...</a>#}
+    </p>
+        <button class="btn btn-secondary d-block mb-4" data-toggle="collapse" data-target="#collapse-btn-2">
+            Read More...
+        </button>
+        <div class="collapse"  id="collapse-btn-2">
+        <h5 class="card-subtitle text-center"> Core Functions </h5>
+    <p class="text-sm-left m-3 card-text"> At present, the total fertility rate (TFR) is estimated at 4.9 children per
+        woman and the birth registration rate is at 65.1%. Out of 1,180,795 children aged 0-5 years, 54.0 percent are
+        fully immunised, 38.6 percent partially immunised and 1.4 percent were never immunised. <br/>
+        In Sierra Leone, the infant mortality rate is 92 deaths per 1,000 live births. The estimate of child mortality
+        (age 12 months to 4 years) is 70 deaths per 1,000 live births, while the overall under-five mortality rate for
+        the same period is 156  deaths per  1,000  live  births.  The  neonatal  mortality  rate  is  39  deaths  per
+        1,000  live  births. The post neonatal mortality rate is 54 deaths per 1,000 live births. </p>
+            <div class="card-footer text-center text-light"> Cloud Based HIS for Sierra Leone </div>
+    </div>
+
+    </div>
+    </div>
+    </div>
+
+{% endblock %}

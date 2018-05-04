@@ -1,0 +1,35 @@
+<title> List of Appointments </title>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+    <div class="jumbotron">
+
+        <h4 class="text-info text-center display-6 font-weight-bold"> This page lists all registered appointments
+        </h4><br/>
+
+    <!-- appointments is coming from the context_object_name in the AppointmentListView -->
+        <ol>
+            {% for appointment in appointments %}
+                <h5><li><a href="{{ appointment.id }}"> {{ appointment.date }} </a></li></h5>
+                {% empty %}
+                    <p class="emptyList" align="center">Sorry, no appointments in this list.</p>
+            {% endfor %}
+        </ol>
+
+    <!-- displaying success messages on addition and deletion of appointments -->
+        {% if messages %}
+            {% for message in messages %}
+                <p class="alert alert-dismissable
+                {% if message.tags %}
+                alert-{{ message.tags }}">
+                {% endif %}
+                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ message }}
+                </p>
+
+            {% endfor %}
+        {% endif %}
+    </div>
+
+{% endblock %}

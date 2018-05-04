@@ -1,0 +1,22 @@
+/* This is the master css file */
+
+.fontOnNav{
+    font-family: 'Russo One', sans-serif;
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+
+.emptyList{
+    font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+    font-size: 1.5em;
+    font-style: italic;
+    color: red;
+}
+
+#mainImage{
+    left: 30%;
+    right: 30%;
+    position: absolute;
+    width: 40%;
+    margin-bottom: 2%;
+}

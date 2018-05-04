@@ -1,0 +1,35 @@
+<title> List of Report </title>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+    <div class="jumbotron">
+
+        <h4 class="text-info text-center display-6 font-weight-bold"> This page lists all recorded medical reports
+        </h4><br/>
+
+    <!-- reports is coming from the context_object_name in the ReportListView -->
+        <ol>
+            {% for report in reports %}
+                <h3><li><a href="{{ report.id }}"> {{ report.name }} </a></li></h3>
+                {% empty %}
+                    <p class="emptyList" align="center">Sorry, no medical reports in this list.</p>
+            {% endfor %}
+        </ol>
+
+    <!-- displaying success messages on addition and deletion of medical reports -->
+        {% if messages %}
+            {% for message in messages %}
+                <p class="alert alert-dismissable
+                {% if message.tags %}
+                alert-{{ message.tags }}">
+                {% endif %}
+                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ message }}
+                </p>
+
+            {% endfor %}
+        {% endif %}
+    </div>
+
+{% endblock %}

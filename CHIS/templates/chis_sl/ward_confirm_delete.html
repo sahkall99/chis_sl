@@ -1,0 +1,19 @@
+<title>Delete Ward</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+    <!-- ward_delete is the context_object_name from the WardDeleteView -->
+        <h1> Delete Ward Number {{ ward_delete.ward_number }} ({{ ward_delete.name }})
+            from {{ ward_delete.hospital }} ?</h1>
+        <form method="post">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-danger" value="Delete">
+            <a href="{% url 'chis_sl:ward_detail' pk=ward_delete.pk %}">
+            <input type="button" class="btn btn-warning" value="Cancel">
+            </a>
+
+        </form>
+    </div>
+
+{% endblock %}

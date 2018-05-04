@@ -1,0 +1,17 @@
+<title> Illnesses and Affected Patients </title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="jumbotron">
+        <h4 class="text-info text-center display-6 font-weight-bold"> This page lists all illnesses affecting patients
+        </h4><br/>
+
+    <!-- patient_illnesses is coming from the context_object_name in the PatientIllnessListView -->
+        <ol>
+            {% for patient_illness in patient_illnesses %}
+                <h3><li><a href="{{ patient_illness.id }}"> {{ patient_illness.patient }} </a></li></h3>
+            {% endfor %}
+        </ol>
+    </div>
+
+{% endblock %}

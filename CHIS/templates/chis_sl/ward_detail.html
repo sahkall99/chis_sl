@@ -1,0 +1,37 @@
+<title>Ward Detail</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="container">
+
+            <h4 class="text-info text-center display-6 font-weight-bold">
+                Details Page for {{ ward_detail.name }} </h4><br/>
+            <p> Ward Number: {{ ward_detail.number }}</p>
+            <p> Name of Ward: {{ ward_detail.name }}</p>
+            <p> Hospital: {{ ward_detail.hospital }}</p>
+
+
+        </div>
+    </div>
+
+    <!-- Link for updating the current ward's records. update_ward & delete_ward are names of url mappings -->
+    {% for group in user.groups.all %}
+        {% if group.name == 'Hospital_Staff'  %}
+            {# Content for users within the 'Hospital_Staff' group #}
+            <div class="container">
+                <p>
+                    <a class="btn btn-warning" href="{% url 'chis_sl:update_ward' pk=ward_detail.pk %}"> Update Records
+                    </a>
+                    {% if perms.ward.delete_ward %}
+                        {#  Content for users that can delete ward records #}
+                        <a class="btn btn-danger" href="{% url 'chis_sl:delete_ward' pk=ward_detail.pk %}">
+                            Delete Records
+                        </a>
+                    {% endif %}
+                </p>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}

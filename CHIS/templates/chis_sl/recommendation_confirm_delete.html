@@ -1,0 +1,21 @@
+<title>Delete Medical Recommendation</title>
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+    <!-- recommendation_delete is the context_object_name from the RecommendationDeleteView -->
+        <h1> Delete Medical Recommendation titled {{ recommendation_delete.recommendation_number }} dated
+            {{ recommendation_delete.recommendation_date }} with status
+            {{ recommendation_delete.recommendation_status }}?
+        </h1>
+        <form method="post">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-danger" value="Delete">
+            <a href="{% url 'chis_sl:recommendation_detail' pk=recommendation_delete.pk %}">
+            <input type="button" class="btn btn-warning" value="Cancel">
+            </a>
+
+        </form>
+    </div>
+
+{% endblock %}

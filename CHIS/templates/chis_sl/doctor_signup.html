@@ -1,0 +1,23 @@
+<title> New Doctor </title>
+{% extends 'base.html' %}
+{% load staticfiles %}  <!-- always place this line for loading static files here -->
+{% block content %}
+
+    <div class="container">
+        <div class="jumbotron">
+            {% if signedup %}   <!-- checks to see if the user is a signed up user -->
+                <h1> Thank you for signing up! </h1>
+            {% else %}
+        <h1> You can sign up as a new doctor here: </h1><br/>
+
+        <h2> Please fill out the form: </h2><br/><hr/>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form_new_doctor.as_p }}
+                <input type="submit" class="btn btn-primary" value="Sign Up">
+            </form>
+        {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

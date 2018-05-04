@@ -1,0 +1,38 @@
+<title>Doctors-Recommendations</title>
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+    <div class="jumbotron">
+
+        <h4 class="text-info text-center"> This page lists all recommendations for Dr. {{ request.user.first_name }}
+            {{ request.user.last_name }}
+        </h4>
+        <br/>
+
+    <!-- doctors is coming from the context_object_name in the DoctorListView -->
+        <ol>
+            {% for recommendation in recommendation_list %}
+                <h5><li><a href="{{ recommendation.id }}"> Recommendation made by: {{ recommendation.doctor }}
+                    on behalf of {{ recommendation.patient }} dated {{ recommendation.date }}</a></li></h5>
+                {% empty %}
+                    <p class="emptyList" align="center">Sorry, no recommendations for this doctor.</p>
+            {% endfor %}
+        </ol>
+
+    <!-- displaying success messages on addition and deletion of doctors -->
+        {% if messages %}
+            {% for message in messages %}
+                <p class="alert alert-dismissable
+                {% if message.tags %}
+                alert-{{ message.tags }}">
+                {% endif %}
+                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ message }}
+                </p>
+
+            {% endfor %}
+        {% endif %}
+    </div>
+
+{% endblock %}

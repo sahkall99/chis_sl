@@ -1,0 +1,35 @@
+<title>Patient-Medical Report</title>
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+    <div class="jumbotron">
+        <h4 class="text-info text-center display-6 font-weight-bold"> This page lists the medical reports for the
+            patient {{ request.user.first_name }} {{ request.user.last_name }}
+        </h4><br/>
+
+            <ol>
+                {% for report in report_list %}
+                    <h5><li><a href="{{ report.id }}"> Your Medical Report titled: {{ report.name }} is dated
+                    {{ report.date }}</a></li></h5>
+                    {% empty %}
+                        <p class="emptyList" align="center">Sorry, you have no Medical Reports at this moment!.</p>
+                {% endfor %}
+            </ol>
+
+        <!-- displaying success messages on addition and deletion of medical reports -->
+        {% if messages %}
+            {% for message in messages %}
+                <p class="alert alert-dismissable
+                {% if message.tags %}
+                alert-{{ message.tags }}">
+                {% endif %}
+                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ message }}
+                </p>
+
+            {% endfor %}
+        {% endif %}
+    </div>
+
+{% endblock %}
